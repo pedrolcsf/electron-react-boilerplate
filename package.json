@@ -1,0 +1,80 @@
+{
+  "name": "electron-react-boilerplate",
+  "version": "1.0.0",
+  "main": "./dist/main.js",
+  "author": "Pedro Ferreira <pedrolcsferreira@gmail.com>",
+  "description": "A Electron + React Boilerplate",
+  "license": "MIT",
+  "scripts": {
+    "build": "rimraf dist && npm-run-all -p build:*",
+    "build:electron": "cross-env NODE_ENV=production webpack --config webpack/electron.webpack.js",
+    "build:react": "cross-env NODE_ENV=production webpack --config webpack/react.webpack.js",
+    "dev": "npm-run-all -p dev:react electron:serve",
+    "dev:electron": "cross-env NODE_ENV=development webpack --config webpack/electron.webpack.js && electron .",
+    "dev:react": "cross-env NODE_ENV=development webpack-dev-server --config webpack/react.webpack.js",
+    "electron:serve": "wait-on http-get://localhost:4000/ && npm run dev:electron",
+    "postinstall": "electron-builder install-app-deps",
+    "package": "yarn build && electron-builder build --publish never"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.17.9",
+    "@chakra-ui/react": "^1.8.7",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "framer-motion": "^6.2.9",
+    "npm-run-all": "^4.1.5",
+    "polished": "^4.2.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-icons": "^4.3.1",
+    "react-refresh": "^0.12.0",
+    "styled-components": "^5.3.5",
+    "wait-on": "^6.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.5",
+    "@types/node": "^17.0.23",
+    "@types/react": "^17.0.43",
+    "@types/react-dom": "^17.0.14",
+    "@types/styled-components": "^5.1.24",
+    "babel-loader": "^8.2.4",
+    "cross-env": "^7.0.3",
+    "electron": "^18.0.3",
+    "electron-builder": "^22.14.13",
+    "html-webpack-plugin": "^5.5.0",
+    "typescript": "^4.6.3",
+    "webpack": "^5.71.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1"
+  },
+  "build": {
+    "appId": "electron-react-boilerplate.pedroferreira.dev",
+    "productName": "Electron React Boilerplate",
+    "files": [
+      "dist/"
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ]
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Development"
+    },
+    "directories": {
+      "buildResources": "build",
+      "output": "release"
+    }
+  }
+}
